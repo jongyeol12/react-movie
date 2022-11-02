@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="root"></div>
+  </body>
+  <!-- 리액트를 설치하려면 react, react-dom을 import 해야 한다
+  react JS는 element를 생성, event listener를 더하는 것을 도와준다
+  react-dom은 모든 react element를 HTML body에 둘 수 있게 한다 -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+
+  <!-- jsx 코드를 사용하려면 babel을 가져온다 -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = document.getElementById("root");
+
+    // 함수형 컴포넌트의 첫글자는 대문자!
+    function Title() {
+      return (
+        <h3 id="title" onMouseEnter={() => console.log("mouse enter")}>
+          hello i'm a title
+        </h3>
+      );
+    }
+
+    const Button = () => (
+      <button
+        style={{
+          backgroundColor: "tomato",
+        }}
+        onClick={() => console.log("im clicked")}
+      >
+        Clcik me
+      </button>
+    );
+    const Container = () => (
+      <div>
+        <Title />
+        <Button />
+      </div>
+    );
+
+    // Container를 렌더링하고 root에 담는다
+    ReactDOM.render(<Container />, root);
+  </script>
+</html>
+
+<!-- 브라우저는 Jsx를 이해 하지 못해 babel이 jsx코드를 브라우저가 이해할수 있는 형태로 변환 -->
