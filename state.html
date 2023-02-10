@@ -14,6 +14,8 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
     function MinutesToHours() {
+      // 리액트의  React.useState()는  배열 [undefined, f]을 반환한다, f는 상태를 갱신하는 함수
+      // useState()는 다음 코드와 같이 인자에 초기값을 넣을 수 있고 구조분해할당으로 상태관리 한다
       const [amount, setAmount] = React.useState(0);
       const [flipped, setFlipped] = React.useState(false);
       const onChange = (event) => {
@@ -21,10 +23,15 @@
       };
 
       const reset = () => setAmount(0);
-      // onFlip함수에 setFlipped(!flipped)으로 설정한다면 flipped가 컴포넌트 외부에서 업데이트 될 경우  flipped의 결과가 달라질 수 있다
-      // 따라서 현재 state값 current를 넣어주고, 그 반대를 도출
+      /**
+       * onFlip함수에 setFlipped(!flipped)으로 설정한다면 flipped가 컴포넌트 외부에서 업데이트 될 경우  flipped의 결과가 달라질 수 있다
+       * 사이드 이펙트를 해결하기 위해
+       *! 현재 state를 가지고 새로운 값을 계산할 때 상태갱신함수에 인자로 함수를 넣는다,
+       *! 그 함수의 인자는 현재값 current, 리턴 값이 새로운 state가 된다
+       */
       const onFlip = () => {
         reset();
+
         setFlipped((current) => !current);
       };
       return (
@@ -80,6 +87,8 @@
       );
     }
 
+    // app 컴포넌트가  root에 담기고 렌더링된다, state는 값이 변경될 때 마다 해당컴포넌트가 재렌더링 된다
+    // 리액트는 컴포넌트가 재랜더링 될 때 UI에서 바뀐부분만 업데이트하기 때문에 상호작용이 많은 UI를 만들기 용이하다
     const root = document.getElementById("root");
     ReactDOM.render(<App />, root);
   </script>
