@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    // 모든 컴포넌트는 인자를 받는데 그 인자이름을 props라고 부른다, Btn으로부터 전달 받은 속성(properties)이다
+    // props는 함수에 객체로 들어오기(props는 객체) 때문에 function Btn(props)로 이외에도 Btn({banana}) 와 같은형태롤 쓸 수 있다,
+    function Btn({ banana }) {
+      // console.log(props);
+      return (
+        <button
+          style={{
+            backgroundColor: "tomato",
+            color: "white",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: 10,
+          }}
+        >
+          {banana}
+        </button>
+      );
+    }
+
+    function App() {
+      // option 태그에 value 속성을 추가해서 옵션이 바뀔때마다(value가 바뀔때마다) 렌더링되는 컴포넌트를 다르게 한다
+      return (
+        /**
+         Btn컴포넌트에 banana라는 props를 보내는 것은  Btn() 함수를 호출해서 컴포넌트에서 보낸 props를 객체인 인자로 보낸것과 같다
+         Btn({banana= "save changes"})
+        */
+        <div>
+          <Btn banana="save changes" />
+          <Btn banana="Continue" />
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
+
+<!--
+ReactJS는 어플리케이션을 interactive 하게 만들어주는 library
+react-dom은 library, 또는 패키지. 모든 react element들을 html body에 둘 수 있도록 해준다.
+-->
+
+<!-- Props는 부모 컴포넌트로부터 자식 컴포넌트에 데이터를 보낼 수 있게 해주는 방법 -->
