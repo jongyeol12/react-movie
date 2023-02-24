@@ -18,6 +18,7 @@
       // useState()는 다음 코드와 같이 인자에 초기값을 넣을 수 있고 구조분해할당으로 상태관리 한다
       const [amount, setAmount] = React.useState(0);
       const [flipped, setFlipped] = React.useState(false);
+
       const onChange = (event) => {
         setAmount(event.target.value); // 데이터를 업데이트
       };
@@ -31,10 +32,10 @@
        */
       const onFlip = () => {
         reset();
-
         setFlipped((current) => !current);
       };
       return (
+        // lavel과 input 태그를 연겷하기 위해 label htlmFor 과 input의 id를 같게 설정한다
         <div>
           <div>
             <label htmlFor="minutes">Minutes</label>
@@ -71,6 +72,8 @@
       const onSelect = (event) => {
         setIndex(event.target.value);
       };
+
+      // option 태그에 value 속성을 추가해서 옵션이 바뀔때마다(value가 바뀔때마다) 렌더링되는 컴포넌트를 다르게 한다
       return (
         <div>
           <h1>Super Converter</h1>
