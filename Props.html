@@ -11,44 +11,40 @@
   </body>
   <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
     // 모든 컴포넌트는 인자를 받는데 그 인자이름을 props라고 부른다, Btn으로부터 전달 받은 속성(properties)이다
-    // props는 함수에 객체로 들어오기(props는 객체) 때문에 function Btn(props)로 이외에도 Btn({text, onClcik}) 와 같은형태롤 쓸 수 있다,
-    function Btn({ text, onClick }) {
-      // console.log(text, onClick);
-      console.log(text, "was renderd");
+    // fontSize의 기본값을 25로 설정 , props로 fontSize를 전달받지 못한 컴포넌트에만 기본값이 적용된다
+    function Btn({ text, fontSize = 25 }) {
+      console.log(text, fontSize);
       return (
-        // 버튼 태그에 onClick이벤트리스너 등록,  onClick이라는 props를 붙여준다
         <button
-          onClick={onClick}
           style={{
             backgroundColor: "tomato",
             color: "white",
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
+            fontSize,
           }}
         >
           {text}
         </button>
       );
     }
-    // Btn컴포넌트의 memorized version Btn,  부모컴포넌트가 state가 바껴 재렌더링 될 때 그 안의 자식 컴포넌트의 props가 변경되지 않으면 자식 컴포넌트는 재렌더링 하지 않는다
-    const MemorizedBtn = React.memo(Btn);
+
+    // 리액트에서 제공하는 propTypes로 컴포넌트 props 데이터 타입을 지정 할 수 있다
+    // isRequired 가 붙으면 해당 props는 필수적으로 들어오는지 검사한다
+    Btn.propTypes = {
+      text: PropTypes.string.isRequired,
+      fontSize: PropTypes.number,
+    };
     function App() {
-      // changeValue함수는 부모 컴포넌트(app컴포넌트)의 상태를 바꾸는 함수인데 자식 컴포넌트(Btn컴포넌트)에서 실행하여 부모 컴포넌트의 state를 변경
-      const [value, setValue] = React.useState("Save Changes");
-      const changeValue = () => setValue("Revert Changes");
       return (
-        /**
-         *! Btn컴포넌트에 text라는 props를 보내는 것은  Btn() 함수를 호출해서 컴포넌트에서 보낸 props를 객체인 인자로 보낸것과 같다
-         * Btn({text= "save changes"})
-         * Btn 컴포넌트에는 무엇을 넣든간에 Props이다  ex) html태그에 onclick을 넣으면 이벤트리스너를 등록하는 것, Btn 컴포넌트에는 text와 onClick이라는 이름의 Props가 전달되는 것
-         */
         <div>
-          <MemorizedBtn text={value} onClick={changeValue} />
-          <MemorizedBtn text="Continue" />
+          <Btn text="Save Changes" fontSize={18} />
+          <Btn text={"Continue"} />
         </div>
       );
     }
